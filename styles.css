@@ -118,47 +118,20 @@ body::after {
     opacity: 0;
     animation: fadeIn 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     will-change: transform, opacity;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .background-image img {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
     width: auto;
-    height: 100%;
-    object-fit: cover;
-    object-position: calc(50% + 130px) center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    height: auto;
+    object-fit: contain;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform;
-    min-width: 100%;
-}
-
-/* Для больших экранов */
-@media (min-width: 1024px) {
-    .background-image img {
-        object-position: left center;
-        left: 0;
-        transform: translateY(-50%);
-    }
-}
-
-/* Для вертикальных экранов */
-@media (max-aspect-ratio: 16/9) {
-    .background-image img {
-        width: auto;
-        height: 100%;
-        min-width: 100%;
-    }
-}
-
-/* Для горизонтальных экранов */
-@media (min-aspect-ratio: 16/9) {
-    .background-image img {
-        width: 100%;
-        height: auto;
-        min-height: 100%;
-    }
 }
 
 /* Надпись "БиоТоп" */
