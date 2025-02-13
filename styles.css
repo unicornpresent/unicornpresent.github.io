@@ -27,7 +27,7 @@ body::after {
     left: 0;
     right: 0;
     bottom: 0;
-    border: 10px solid rgba(255, 255, 255, 0.5);
+    border: 10px solid #2d6853;
     z-index: 10;
     pointer-events: none;
 }
@@ -116,7 +116,8 @@ body::after {
     overflow: hidden;
     z-index: 1;
     opacity: 0;
-    animation: fadeIn 2s forwards;
+    animation: fadeIn 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    will-change: transform, opacity;
 }
 
 .background-image img {
@@ -124,13 +125,12 @@ body::after {
     height: 100%;
     object-fit: cover;
     object-position: center;
-    min-height: 100vh;
-    min-width: 100vw;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
 }
 
 /* Для больших экранов */
@@ -156,9 +156,9 @@ body::after {
     }
 }
 
-/* Надпись "БиоТоп", появляется после изображения */
+/* Надпись "БиоТоп" */
 .bio-top {
-    position: absolute;
+    position: fixed;
     z-index: 2;
     font-size: var(--text-size);
     color: rgba(255, 255, 255, 0.5);
@@ -168,13 +168,14 @@ body::after {
     width: 90%;
     max-width: 1200px;
     text-align: center;
-    animation: slideDownBioTop 2s forwards;
+    animation: slideDownBioTop 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     animation-delay: 1.5s;
     white-space: nowrap;
     letter-spacing: 0.1em;
     overflow: hidden;
     text-overflow: ellipsis;
     opacity: 0;
+    will-change: transform, opacity;
 }
 
 @keyframes slideDownBioTop {
@@ -188,36 +189,32 @@ body::after {
     }
 }
 
-.bio-top::after {
-  content: "Топ";
-  font-weight: bold;
-  font-size: 2em;
-  margin-left: 0.2em;
-}
-
-/* Надписи "Что в выпуске?" — появляются с правой стороны */
+/* Надписи "Что в выпуске?" */
 .release {
-    position: absolute;
+    position: fixed;
     font-size: var(--release-font-size);
     color: #fff;
     opacity: 0;
-    animation: fadeIn 1s forwards;
+    animation: fadeIn 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     right: 2vw;
     z-index: 2;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
 }
 
 .release:nth-child(3) { 
-    bottom: calc(50px + 90px);
+    bottom: calc(80px + 160px);
     animation-delay: 3s;
     right: 5vw;
 }
 .release:nth-child(4) { 
-    bottom: calc(50px + 45px);
+    bottom: calc(80px + 80px);
     animation-delay: 3.5s;
     right: 8vw;
 }
 .release:nth-child(5) { 
-    bottom: 50px;
+    bottom: 80px;
     animation-delay: 4s;
     right: 11vw;
 }
@@ -225,7 +222,7 @@ body::after {
 @keyframes fadeIn {
     from { 
         opacity: 0;
-        transform: translateX(50px);
+        transform: translateX(30px);
     }
     to { 
         opacity: 1;
