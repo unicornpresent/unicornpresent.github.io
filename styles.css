@@ -1,0 +1,113 @@
+:root {
+    --bg-width: 200px;
+    --bg-height: 200px;
+    --text-size: clamp(50px, 15vw, 300px);
+    --release-font-size: clamp(16px, 2vw, 24px);
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bio-top {
+    position: absolute;
+    z-index: 2;
+    font-size: var(--text-size);
+    color: rgba(255, 255, 255, 0.5);
+    top: -100%;
+    left: 50%;
+    transform: translateX(-50%) scaleY(1.75);
+    width: 90%;
+    max-width: 1200px;
+    text-align: center;
+    animation: slideDownBioTop 2s forwards;
+    animation-delay: 1.5s;
+    white-space: nowrap;
+    letter-spacing: 0.1em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0;
+}
+
+@keyframes slideDownBioTop {
+    0% {
+        top: -100%;
+        opacity: 0;
+    }
+    100% {
+        top: 5vh;
+        opacity: 1;
+    }
+}
+
+.background-image {
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    width: 100vw;
+    height: 100vh;
+    transform: translateX(-50%);
+    background-image: url('./background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    animation: slideDown 2s forwards;
+    opacity: 0;
+}
+
+@keyframes slideDown {
+    0% {
+        top: -100%;
+        opacity: 0;
+    }
+    100% {
+        top: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+}
+
+.release {
+    position: absolute;
+    font-size: var(--release-font-size);
+    color: #fff;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+    right: 2vw;
+}
+
+.release:nth-child(3) { 
+    bottom: 140px;
+    animation-delay: 3s;
+    right: 5vw;
+}
+.release:nth-child(4) { 
+    bottom: 95px;
+    animation-delay: 3.5s;
+    right: 8vw;
+}
+.release:nth-child(5) { 
+    bottom: 50px;
+    animation-delay: 4s;
+    right: 11vw;
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateX(0);
+    }
+} 
