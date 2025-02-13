@@ -1,25 +1,35 @@
+:root {
+    --bg-width: 200px;
+    --bg-height: 200px;
+    --text-size: clamp(50px, 15vw, 300px);
+    --release-font-size: clamp(16px, 2vw, 24px);
+}
+
 /* Сброс стилей для страницы */
 html, body {
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
-    background: #000;
     overflow: hidden;
+    background: #000;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Рамка вокруг окна просмотра */
-body::before {
-    content: "";
+/* Рамка */
+body::after {
+    content: '';
     position: fixed;
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
-    border: 20px solid rgba(255, 255, 255, 0.5);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 10px solid rgba(255, 255, 255, 0.5);
+    z-index: 10;
     pointer-events: none;
-    z-index: 1000;
 }
 
 /* Анимация падения изображения журнала */
@@ -98,34 +108,84 @@ body::before {
 
 /* Блок с изображением журнала */
 .background-image {
-  position: fixed;
-  left: 50%;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1;
-  opacity: 0;
-  animation: imageSlide 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 1;
+    opacity: 0;
+    animation: fadeIn 2s forwards;
 }
 
-/* Изображение занимает всю область */
 .background-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    min-height: 100vh;
+    min-width: 100vw;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+}
+
+/* Для больших экранов */
+@media (min-aspect-ratio: 16/9) {
+    .background-image img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+/* Для вертикальных экранов */
+@media (max-aspect-ratio: 16/9) {
+    .background-image img {
+        width: auto;
+        height: 100%;
+    }
+}
+
+/* Для мобильных устройств */
+@media (max-width: 768px) {
+    .background-image img {
+        object-position: center center;
+    }
 }
 
 /* Надпись "БиоТоп", появляется после изображения */
 .bio-top {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%) scaleY(1.75);
-  font-size: 40px;
-  color: rgba(255, 255, 255, 0.5);
-  z-index: 1000;
-  animation: bioTopSlide 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  animation-delay: 0.5s;
-  font-weight: normal;
-  top: -50%;
+    position: absolute;
+    z-index: 2;
+    font-size: var(--text-size);
+    color: rgba(255, 255, 255, 0.5);
+    top: -100%;
+    left: 50%;
+    transform: translateX(-50%) scaleY(1.75);
+    width: 90%;
+    max-width: 1200px;
+    text-align: center;
+    animation: slideDownBioTop 2s forwards;
+    animation-delay: 1.5s;
+    white-space: nowrap;
+    letter-spacing: 0.1em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0;
+}
+
+@keyframes slideDownBioTop {
+    0% {
+        top: -100%;
+        opacity: 0;
+    }
+    100% {
+        top: 5vh;
+        opacity: 1;
+    }
 }
 
 .bio-top::after {
@@ -137,19 +197,38 @@ body::before {
 
 /* Надписи "Что в выпуске?" — появляются с правой стороны */
 .release {
-  position: fixed;
-  right: 20px;
-  font-size: 24px;
-  color: #fff;
-  opacity: 0;
-  z-index: 3;
-  animation: smoothSlideRight 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  animation-delay: 2s;
-  bottom: auto;
-  transform: translateX(100%);
+    position: absolute;
+    font-size: var(--release-font-size);
+    color: #fff;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+    right: 2vw;
+    z-index: 2;
 }
 
-/* Обновленные позиции для надписей */
-.release:nth-of-type(1) { top: 30%; }
-.release:nth-of-type(2) { top: 40%; }
-.release:nth-of-type(3) { top: 50%; } 
+.release:nth-child(3) { 
+    bottom: calc(50px + 90px);
+    animation-delay: 3s;
+    right: 5vw;
+}
+.release:nth-child(4) { 
+    bottom: calc(50px + 45px);
+    animation-delay: 3.5s;
+    right: 8vw;
+}
+.release:nth-child(5) { 
+    bottom: 50px;
+    animation-delay: 4s;
+    right: 11vw;
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateX(0);
+    }
+} 
